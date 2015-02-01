@@ -40,10 +40,15 @@ table
 
 /* view movie styles */
 
+// variables
+$primary: #212a39
+$secondary: #dc6f67
+$tertiary: #629075
+
 html
   font:
     size: 16px
-    family: sans-serif
+    family: "jaf-bernino-sans-condensed", sans-serif
     weight: 400
 body
   padding: 2rem
@@ -66,7 +71,7 @@ body
   width: 25%
   font-size: 1.25rem
 
-.bodyWrapper
+.container
   margin: 0 auto
   overflow: hidden
   width: 75%
@@ -75,25 +80,26 @@ body
   width: 100%
   &:first-child
     margin-top: 0
-  h3
-    font:
-      size: 1.5rem
-      weight: 700
-  h4
-    font:
-      size: 1rem
-      weight: 400
-  h3, h4
-    letter-spacing: 0.1rem
-    margin-bottom: 0.25rem
+h3
+  font:
+    size: 1.5rem
+    weight: 700
+h4
+  font:
+    size: 1rem
+    weight: 400
+h3, h4
+  letter-spacing: 0.1rem
+  margin-bottom: 0.25rem
 
 .titleLink
   color: black
   text-decoration: none
   margin-bottom: 1rem
-  display: block
+  display: inline-block
+  font-weight: 700
   &:hover
-    color: black
+    color: $tertiary
 .movieTitle, .movieYear
   font:
     size: 3rem
@@ -105,6 +111,7 @@ body
     width: 75%
     max-width: 200px
 .moviePoster
+  width: 200px
   margin-bottom: 1rem
 .button
   display: inline
@@ -118,7 +125,10 @@ body
   text-align: center
   &:hover
     color: white
-    background-color: white * 0.1
+    background-color: $tertiary
+.redoSearch
+  padding: 2rem 0
+  background-color: $secondary
 .rightSide
   width: 50%
   *
@@ -129,12 +139,66 @@ body
   width: 100px /* Set the size of the progress bar */
   height: 100px
   position: absolute /* Enable clipping */
+  top: 6.5rem
   clip: rect(0px, 100px, 100px, 50px) /* Hide half of the progress bar */
 /* Set the sizes of the elements that make up the progress bar */
 .circle
   width: 80px
   height: 80px
-  border: 10px solid green
-  border-radius: 50px
+  border: 10px solid $secondary
+  border-radius: 50%
   position: absolute
   clip: rect(0px, 50px, 100px, 0px)
+
+/* Using the data attributes for the animation selectors. */
+/* Base settings for all animated elements */
+div[data-anim~=base]
+  -webkit-animation-iteration-count: 1 /* Only run once */
+  -webkit-animation-fill-mode: forwards /* Hold the last keyframe */
+  -webkit-animation-timing-function:linear /* Linear animation */
+
+.wrapper[data-anim~=wrapper]
+  -webkit-animation-duration: 0.01s /* Complete keyframes asap */
+  -webkit-animation-delay: 1s /* Wait half of the animation */
+  -webkit-animation-name: close-wrapper /* Keyframes name */
+
+.circle[data-anim~=left]
+  -webkit-animation-duration: 3s /* Full animation time */
+  -webkit-animation-name: left-spin
+
+.circle[data-anim~=right]
+  -webkit-animation-duration: 1s /* Half animation time */
+  -webkit-animation-name: right-spin
+
+/* Rotate the right side of the progress bar from 0 to 180 degrees */
+@-webkit-keyframes right-spin
+  from
+    -webkit-transform: rotate(0deg)
+  to
+    -webkit-transform: rotate(180deg)
+
+/* Rotate the left side of the progress bar from 0 to 360 degrees */
+@-webkit-keyframes left-spin
+  from
+    -webkit-transform: rotate(0deg)
+  to
+    -webkit-transform: rotate(360*0.96deg)
+
+/* Set the wrapper clip to auto, effectively removing the clip */
+@-webkit-keyframes close-wrapper
+  to
+    clip: rect(auto, auto, auto, auto)
+
+.rating
+  position: relative
+  top: 25px
+  left: 35px
+
+.lowerContent
+  margin-top: 100px
+
+.buttonBlock
+  .button
+    display: inline-block
+    width: 46%
+    margin-right: 10px
